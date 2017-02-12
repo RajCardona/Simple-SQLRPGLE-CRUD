@@ -11,7 +11,7 @@
 
 ## Motivation
 
-This project is just for fun and learn more about the lastest RPG style of programming.
+This project is just for fun and learn more about the latest RPG style of programming.
 
 ## Installation
 
