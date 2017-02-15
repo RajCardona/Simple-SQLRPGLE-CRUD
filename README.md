@@ -2,7 +2,7 @@
 
 ## Getting Started in fully rpgle
 
-![alt tag](https://scontent.feoh1-1.fna.fbcdn.net/v/t34.0-12/16787971_744508812371248_1695434668_n.png?oh=619106201136fb0a1e3193425851716d&oe=58A6CA86)
+![alt tag](https://scontent.feoh1-1.fna.fbcdn.net/v/t34.0-12/16754782_744510472371082_1736960076_n.png?oh=4ebbc6672f109ade984a5e04983a4511&oe=58A5C6BA)
 
 
 ## Authors
