@@ -23,4 +23,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* To Tata Consultancy Services for give me an opportunity for work with them and learn more everyday.
+* To all my mentors for give me an opportunity for work with them and learn more everyday.
