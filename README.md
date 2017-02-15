@@ -1,6 +1,6 @@
 
 
-## Getting Started in fully rpgle
+## Getting Started in fully free rpgle
 
 ![alt tag](https://scontent.feoh1-1.fna.fbcdn.net/v/t34.0-12/16754782_744510472371082_1736960076_n.png?oh=4ebbc6672f109ade984a5e04983a4511&oe=58A5C6BA)
 
