@@ -1,60 +1,20 @@
      **free
-      // ***********************************************************************
-      // EXAMPLE OF BASIC CRUD PROGRAM IN SQLRPGLE using fully free rpg
-      // Author: Rodrigo Alejandro Cardona Quintero
-      // Any Question ?: Contact me at rodrigoalejox12@gmail.com
-      // ***********************************************************************
+      **************************************************************************
+      *  EXAMPLE OF BASIC CRUD PROGRAM IN SQLRPGLE using fully free rpg
+      *  Author: Rodrigo Alejandro Cardona Quintero
+      *  Any Question ?: Contact me at rodrigoalejox12@gmail.com
+      **************************************************************************
 
-      // ******** Compilation Directives ***************************************
+      *********** Compilation Directives ***************************************
        ctl-opt option(*nodebugio:*srcstmt)
                       dftactgrp(*no) ;
        ctl-opt main(Pr_Main) ;
        ctl-opt copyright('The MIT License Copyright 2017 Rodrigo Cardona') ;
 
-      // ******** Files Declarations *******************************************
+      *********** Files Declarations *******************************************
        dcl-f RACDSEJEMP  workstn sfile(SFLTASK:TASKRRN) ;
 
-      // ******** Local Prototypes *********************************************
-       dcl-pr Pr_FillSfl ;
-          *n char(500) ;
-       end-pr ;
-
-       dcl-pr Pr_WriteScreen ;
-          *n char(1) ;
-       end-pr ;
-
-       dcl-pr Pr_ShowScreen ;
-          *n char(1) ;
-       end-pr ;
-
-       dcl-pr Pr_ShowSubfile ;
-          *n char(1) ;
-       end-pr ;
-
-       dcl-pr Pr_ScreenValidation Ind;
-          *n char(1) ;
-       end-pr ;
-
-       dcl-pr Pr_ExecuteCrudScreen ;
-          *n char(1) ;
-       end-pr ;
-
-       dcl-pr Pr_ShowWdw ;
-         *n char(1) ;
-       end-pr ;
-
-       dcl-pr Pr_InsertScreen ;
-          *n char(1) ;
-       end-pr ;
-
-       dcl-pr Pr_ModifyScreen ;
-          *n char(1) ;
-       end-pr ;
-
-       dcl-pr Pr_ViewScreen ;
-          *n char(1) ;
-       end-pr ;
-      // ******** Variables and data structures ********************************
+      *********** Variables and data structures ********************************
 
        // Validation indicators
        dcl-ds DspInd Based(pIndicators);
@@ -84,6 +44,9 @@
          Dategreaterthanerror_34 Ind Pos(34) ;
          ProtectFields_35 Ind Pos(35) ;
          ProtectFields_36 Ind Pos(36) ;
+
+         IndErrors char(20) Pos(31) ;
+
        end-ds ;
 
        // Variable Pointer for indicators
@@ -100,6 +63,7 @@
        dcl-c Success_On_SQL '00' ;
        dcl-c Warning_On_SQL '01' ;
        dcl-c NoData_On_SQL  '02' ;
+
 
        // Data structure based in the query neccesary for fill the subfile of
        // the file RACFFTASKS
@@ -121,6 +85,10 @@
        dcl-s Initialpos zoned(10:0) inz(0) ;
        dcl-s Finalpos zoned(10:0) inz(10) ;
 
+       // Previous initial and finalpos for indicates final
+       dcl-s Previnitialpos zoned(10:0) ;
+       dcl-s PrevFinalpos zoned(10:0)  ;
+
        // Variable for apply filter to subfile query
        dcl-s w_Wheresfl char(500) inz(*blanks) ;
 
@@ -134,7 +102,7 @@
        // Variable with current user
        dcl-s CurrentUser char(10) inz(*user) ;
 
-      // ************** MAIN PROCEDURE  ****************************************
+      ***************** MAIN PROCEDURE  ****************************************
 
        dcl-proc Pr_Main ;
 
@@ -149,10 +117,10 @@
         *Inlr = *On ;
        end-proc ;
 
-      // ************ ADITIONAL PROCEDURES *************************************
+      *************** ADITIONAL PROCEDURES *************************************
 
 
-       // ************* Begin Screen procedures ********************************
+      ***************** Begin Screen procedures ********************************
 
        // This procedure recieves a parameter that indicates what titles should
        // written.
@@ -204,18 +172,14 @@
 
          select ;
            when Par_Choice = 'I' ;
-             //Pr_ExecuteCrudScreen(Par_Choice) ;
              Pr_InsertScreen(Par_Choice) ;
            when Par_Choice = 'S' ;
              Pr_ShowSubfile(Par_Choice) ;
            when Par_Choice = 'M' ;
-             //Pr_ExecuteCrudScreen(Par_Choice) ;
              Pr_ModifyScreen(Par_Choice) ;
            when Par_Choice = 'D' ;
-             //Pr_ExecuteCrudScreen(Par_Choice) ;
              Pr_DeleteScreen(Par_Choice) ;
            when Par_Choice = 'V' ;
-             //Pr_ExecuteCrudScreen(Par_Choice) ;
              Pr_ViewScreen(Par_Choice) ;
         endsl ;
 
@@ -343,23 +307,7 @@
               other;
                 reset w_Wheresfl ;
 
-                // if there are filters by date in subfile then apply
-                // those filters
-                if SFLSTRDATE <> *zeros or SFLENDDATE <> *zeros ;
-                  if SFLSTRDATE <> *zeros ;
-                    w_Wheresfl = ' '+%trim(w_Wheresfl)+' '+
-                                 %trim(' AND STARTDATE >= '+%char(SFLSTRDATE)) ;
-                  endif ;
-
-                  if SFLENDDATE <> *zeros ;
-                    w_Wheresfl = ' '+%trim(w_Wheresfl)+' '+
-                                 %trim(' AND ENDDATE <='+%char(SFLENDDATE)) ;
-                  endif ;
-                  Pr_ShowScreen(Par_Choice) ;
-                  leave ;
-                else ;
                   // if there are selected records in subfile then executes
-
                   if taskrrn > *zeros ;
                      for taskrrn = 1 to Perpage ;
                         chain taskrrn SFLTASK ;
@@ -409,7 +357,6 @@
                         endif ;
                      endfor ;
                   endif ;
-                endif ;
             endsl ;
             if w_CrudFinalize = *On ;
               w_CrudFinalize = *Off ;
@@ -428,6 +375,9 @@
            dcl-s w_ValidisnotOK Ind ;
            dcl-s w_Exists char(1) ;
 
+           // Set zeros in general variable based in DspInd
+           IndErrors = *zeros ;
+
            if Par_Choice = 'I' ; // Validations for Insert
 
               Pr_TurnoffErrors() ;
@@ -437,32 +387,26 @@
                 SELECT '1' INTO : w_Exists FROM RACFFTASKS
                 WHERE TASK_ID =:CRUDTASKID ;
 
-               if w_Exists = '1' ;
-                  Taskidexisterror_31 = *On ;
-                  w_ValidisnotOK = *On ;
-               endif ;
+              Taskidexisterror_31 = (w_Exists = '1') ;
 
               // Validation of dates
               test(De) *iso STARTDATE ; //Validates if date is in YYYYMMDD
-              if (%error) ;
-                 Startdateerror_32 = *On ;
-                  w_ValidisnotOK = *On ;
-              endif ;
+
+              Startdateerror_32 = %error ;
 
               test(De) *iso ENDDATE ;
-              if (%error) ;
-                 Enddateerror_33 = *On ;
-                  w_ValidisnotOK = *On ;
-              endif ;
+
+              Enddateerror_33 = %error ;
 
               if (STARTDATE <> *zeros and ENDDATE <> *zeros
                   and Startdateerror_32 = *Off and Enddateerror_33 = *Off) ;
                  if (STARTDATE > ENDDATE) ;
                     Dategreaterthanerror_34 = *On ;
-                    w_ValidisnotOK = *On ;
                  endif ;
               endif ;
            endif ;
+
+           w_ValidisnotOK = IndErrors <> *Zeros ;
 
            return w_ValidisnotOK ;
        end-proc ;
@@ -474,9 +418,9 @@
           Dategreaterthanerror_34 = *Off ;
        end-proc  ;
 
-      // **************** End Screen procedure *********************************
+     ******************** End Screen procedure *********************************
 
-      // ********** Begin Subfile Procedures ***********************************
+     ************** Begin Subfile Procedures ***********************************
 
        // This procedure set the sql variable to the procedure for
        // poblate the subfile with data based in the customized
@@ -515,6 +459,8 @@
           Pr_Sflinitial() ;
           Pr_SubfileStart() ;
 
+          SflEnd = Pr_Gettotalrecords() < 10 ;
+
           if taskrrn > 0 ;
             SflDsp = *On ;
           else ;
@@ -535,6 +481,14 @@
          dcl-s Count zoned(2:0) ;
 
          dcl-s LastRRN zoned(10:0) ;
+
+         // Set previous values for indicates final of subfile is it is
+         // necessary
+         clear Previnitialpos ;
+         clear Prevfinalpos ;
+
+         Previnitialpos = Initialpos ;
+         Prevfinalpos = Finalpos ;
 
          clear Ds_taskdata ;
 
@@ -579,10 +533,36 @@
          clear SFLTASK ;
        end-proc ;
 
+       dcl-proc Pr_Gettotalrecords ;
+         dcl-pi Pr_Gettotalrecords zoned(10) ;
+         end-pi ;
 
-       // ************* End Subfile procedures *********************************
+         dcl-s w_Total zoned(10:0) ;
 
-       // ************* Begin CRUD procedures **********************************
+         dcl-s sqlcustomized char(500) ;
+
+         sqlcustomized = 'SELECT COUNT(*) '+
+                'FROM (SELECT A.*, RowNumber() Over() as RNum FROM '+
+                'RACFFTASKS AS A Where 1=1) as Tbl Where RNum '+
+                'BetWeen '+%char(PrevInitialpos)+' and '+%char(Prevfinalpos) +
+                ' '+%trim(w_WhereSfl) ;
+
+         exec sql PREPARE QRY FROM: sqlcustomized ;
+
+         exec sql DECLARE QRYC CURSOR FOR QRY ;
+
+         exec sql OPEN QRYC ;
+
+         exec sql FETCH QRYC INTO:w_Total ;
+
+         exec sql CLOSE QRYC ;
+
+         return w_Total ;
+       end-proc ;
+
+      ***************** End Subfile procedures *********************************
+
+      ***************** Begin CRUD procedures **********************************
 
        dcl-proc Pr_ExecuteCrudScreen ;
         dcl-pi Pr_ExecuteCrudScreen ;
