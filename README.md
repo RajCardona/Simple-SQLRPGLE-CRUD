@@ -7,10 +7,9 @@
 ![alt tag](https://scontent.feoh1-1.fna.fbcdn.net/v/t34.0-12/16809320_745076052314524_826797035_n.png?oh=4d751d73a4c85381608b7a4b909d910b&oe=58A81184)
 
 ## Description
-This project is a simple task manager CREATED entirely using THE RPG specification.
+This project is a simple task manager created entirely using the fully rpg specification.
 
-All the project uses SQL for make the CRUD operations and also uses a Subfile with 
-scrollable controls that shows 10 records per page.
+The entire project uses SQL for the CRUD operations. It also uses a Subfile with scrollable controls that displays 10 records per page.
 
 ## Authors
 
