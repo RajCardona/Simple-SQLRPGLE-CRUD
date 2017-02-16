@@ -25,6 +25,11 @@ This project is just for fun and learn more about the latest RPG style of progra
 
 You only need an access to IBM i machine with the the last version of operating system 7.2 or superior.
 
+## Book for learn Modern RPG programming 
+http://www.redbooks.ibm.com/redbooks/pdfs/sg245402.pdf
+
+## Blog for know the latest news in IBM i technologies 
+http://www.rpgpgm.com/
 
 ## Acknowledgments
 
