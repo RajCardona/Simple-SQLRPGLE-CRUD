@@ -694,7 +694,7 @@
                     STARTDATE =:STARTDATE ,
                     ENDDATE =:ENDDATE ,
                     STATE =:STATETASK ,
-                    OWNER = CurrentUser
+                    OWNER =:CurrentUser
                     WHERE TASK_ID=: CRUDTASKID ;
 
                    if xSQLState = Success_On_Sql ;
