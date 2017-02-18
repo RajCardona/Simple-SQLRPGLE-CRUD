@@ -2,12 +2,12 @@
 
 ## Getting Started in fully free rpgle
 
-![alt tag](https://scontent.feoh1-1.fna.fbcdn.net/v/t34.0-12/16754782_744510472371082_1736960076_n.png?oh=4ebbc6672f109ade984a5e04983a4511&oe=58A5C6BA)
+![Screenshot 1](https://scontent.feoh1-1.fna.fbcdn.net/v/t34.0-12/16754782_744510472371082_1736960076_n.png?oh=4ebbc6672f109ade984a5e04983a4511&oe=58A5C6BA)
 
-![alt tag](https://scontent.feoh1-1.fna.fbcdn.net/v/t34.0-12/16809320_745076052314524_826797035_n.png?oh=4d751d73a4c85381608b7a4b909d910b&oe=58A81184)
+![Screenshot 1](https://scontent.feoh1-1.fna.fbcdn.net/v/t34.0-12/16809320_745076052314524_826797035_n.png?oh=4d751d73a4c85381608b7a4b909d910b&oe=58A81184)
 
 ## Description
-This project is a simple task manager created entirely using the fully rpg specification.
+This project is a simple task manager created using the full RPG specification.
 
 The entire project uses SQL for the CRUD operations. It also uses a Subfile with scrollable controls that displays 10 records per page.
 
@@ -17,21 +17,21 @@ The entire project uses SQL for the CRUD operations. It also uses a Subfile with
 
 ## Motivation
 
-This project is just for fun and learn more about the latest RPG style of programming.
+This project was developed just for fun and to learn more about the latest programming style for RPG.
 
 ## Installation
 
-You only need an access to IBM i machine with the the last version of operating system 7.1 or superior.
+You only need access to an IBM i machine with the the latest OS version (7.1 or later).
 
-## Book for learn Modern RPG programming 
+## Book for learning modern RPG programming 
 http://www.redbooks.ibm.com/redbooks/pdfs/sg245402.pdf
 
-## Blog for know the latest news in IBM i technologies 
+## Blog with the latest news in IBM i technologies 
 http://www.rpgpgm.com/
 
 ## Acknowledgments
 
-* To all my mentors for give me an opportunity for work with them and learn more everyday.
+* To all my mentors for giving me the opportunity to work with them and learn more everyday.
 
 ## License
 	The MIT License (MIT)
