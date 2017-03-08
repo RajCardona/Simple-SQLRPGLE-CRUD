@@ -2,9 +2,7 @@
 
 ## Getting Started in fully free rpgle
 
-![Screenshot 1](https://scontent.feoh1-1.fna.fbcdn.net/v/t34.0-12/16754782_744510472371082_1736960076_n.png?oh=4ebbc6672f109ade984a5e04983a4511&oe=58A5C6BA)
-
-![Screenshot 1](https://scontent.feoh1-1.fna.fbcdn.net/v/t34.0-12/16809320_745076052314524_826797035_n.png?oh=4d751d73a4c85381608b7a4b909d910b&oe=58A81184)
+![Screenshot 1](https://scontent.feoh3-1.fna.fbcdn.net/v/t34.0-12/16787971_744508812371248_1695434668_n.png?oh=7c38a97369b7233ec35d179eab854260&oe=58C322C6)
 
 ## Description
 This project is a simple task manager created using the full RPG specification.
