@@ -2,7 +2,7 @@
 
 ## Getting Started in fully free rpgle
 
-![Screenshot 1](https://scontent.feoh3-1.fna.fbcdn.net/v/t34.0-12/16787971_744508812371248_1695434668_n.png?oh=7c38a97369b7233ec35d179eab854260&oe=58C322C6)
+![Screenshot 1](https://github.com/RajCardona/Simple-SQLRPGLE-CRUD/blob/master/imagecrud.png)
 
 ## Description
 This project is a simple task manager created using the full RPG specification.
